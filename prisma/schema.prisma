@@ -13,7 +13,84 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User{
+model User {
   id Int @id @default(autoincrement())
+
+  name String @unique
+
+  Todos Todos[]
+
+  Project Project[]
+
+  Priority Priority[]
+}
+
+model Todos {
+  id Int @id @default(autoincrement())
+
+  title String
+
+  userId Int
+
+  user User @relation(fields: [userId], references: [id])
+
+  projectId Int
+
+  project Project @relation(fields: [projectId], references: [id])
+
+  priorityId Int
+
+  priority Priority @relation(fields: [priorityId], references: [id])
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  dueDate DateTime
+
+  startDate DateTime?
+
+  completedDate DateTime?
+
+  notes      String?
+}
+
+model Project {
+  id Int @id @default(autoincrement())
+
   name String
+
+  userId Int
+
+  user User @relation(fields: [userId], references: [id])
+
+  color String @default("#000000")
+
+  description String?
+
+  createdAt DateTime @default(now())
+
+  updatedAt DateTime @updatedAt
+
+  Todos Todos[]
+}
+
+model Priority {
+  id Int @id @default(autoincrement())
+
+  name String
+
+  code String?
+
+  color String @default("#000000")
+
+  description String?
+
+  priorityNumber Int
+
+  userId Int
+
+  user  User    @relation(fields: [userId], references: [id])
+  
+  Todos Todos[]
 }
