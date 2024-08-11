@@ -52,7 +52,7 @@ model Todos {
 
   completedDate DateTime?
 
-  notes      String?
+  notes String?
 }
 
 model Project {
@@ -90,7 +90,7 @@ model Priority {
 
   userId Int
 
-  user  User    @relation(fields: [userId], references: [id])
-  
+  user User @relation(fields: [userId], references: [id])
+
   Todos Todos[]
 }
